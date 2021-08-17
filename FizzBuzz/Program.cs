@@ -16,8 +16,9 @@ namespace FizzBuzz
         //1.50 recoded most of original methods, added colors and beeps; moved functionality out of main; implemented tests
         //1.50L added even odd functionality for practice lab, added as basic boolean toggle option 
         //1.57L added color toggle, added Header UI method
+        //1.58L changed prime color to cyan, slightly tweaked Prime check logic (explicity checks for 0 and 1)
 
-        public static string CurrVersion = "1.57L";
+        public static string CurrVersion = "1.58L";
 
     }
     public class Program
@@ -112,7 +113,7 @@ namespace FizzBuzz
         public static bool IsPrime(int count, bool colorOn)
         {
 
-
+            if (count <= 1) return false;
             if ((count % 2 == 0 && count != 2) || count == 1) return false;
 
             if (count != 2)
@@ -123,7 +124,7 @@ namespace FizzBuzz
 
 
 
-            if (colorOn) Console.ForegroundColor = ConsoleColor.Yellow;
+            if (colorOn) Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Beep(1000, 90);
             Console.Beep(1200, 50);
 
@@ -133,7 +134,7 @@ namespace FizzBuzz
 
         public static string OddEven(int count, bool beepOn, bool colorOn)
         {
-            string numtype = "";
+            string numtype;
 
 
 
@@ -174,7 +175,7 @@ namespace FizzBuzz
 
             int padSize = ((windowWidth - 10) - 8 - title.Length - Version.CurrVersion.Length) / 2;
 
-            for (int i = 0; i < padSize; i++) padding = padding + "*";
+            for (int i = 0; i < padSize; i++) padding +="*";
 
 
             Console.WriteLine(" {0} {1} ver {2} {0}\n", padding, title, Version.CurrVersion);
@@ -184,24 +185,26 @@ namespace FizzBuzz
         public static bool UI()
         {
 
-            int charCt, middle, usrCount;
+           
             string userInp, userInp2;
             string fizz, buzz;
-            bool showDecimal = true;                                                                        //toggle for binary/decimal count mode
 
+
+            bool showDecimal = true;                                                                       //show decimal alongside binary
             bool loopUI = true;                                                                            //toggle for looping app
-            bool OddEvens = true;                                                                          //toggle for EVEN ODD
-            bool colorOn = false;
+            bool OddEvens = false;                                                                          //toggle for EVEN ODD (overrides output)
+            bool colorOn = true;                                                                          //Color coding on output
 
 
 
-
-            Console.Write("\tPlease type in a word (or leave blank for defaults):  ");                       //Prompt for input for 'fizz' and 'Buzz'
+            
+            Console.Write("\tPlease enter two words separated by a space to use for fizz and buzz\n\t(or leave blank for defaults):  ");                       //Prompt for input for 'fizz' and 'Buzz'
             userInp = Console.ReadLine();
             Console.Write("\tPlease enter a number to count up to (or leave blank for default):  ");
+            
             userInp2 = Console.ReadLine();
 
-            if (!Int32.TryParse(userInp2, out usrCount)) usrCount = 100;
+            if (!Int32.TryParse(userInp2, out int usrCount)) usrCount = 100;
 
 
             if (String.IsNullOrWhiteSpace(userInp) || userInp.Length < 2)                                     //..if empty set Fizz and Buzz to defaults
@@ -209,14 +212,22 @@ namespace FizzBuzz
                 fizz = "Fizz";
                 buzz = "Buzz";
             }
-            else                                                                                              //..otherwise set Fizz and Buzz as substrings
-            {                                                                                                 // split based on lenght of user input
-                charCt = userInp.Length;
-                middle = charCt / 2;
+            /* else                                                                                              //..otherwise set Fizz and Buzz as substrings
+             {                                                                                                 // split based on lenght of user input
+                 charCt = userInp.Length;
+                 middle = charCt / 2;
 
-                fizz = userInp.Substring(0, middle);
-                buzz = userInp.Substring(middle);
-            }
+                 fizz = userInp.Substring(0,middle);
+                 buzz = userInp.Substring(middle);
+             }*/
+           else                                                                                              //..otherwise set Fizz and Buzz as substrings
+           {                                                                                                 // split based on lenght of user input
+
+                string[] fizzBuzz = userInp.Split(' ');
+                fizz = fizzBuzz[0];
+                buzz = fizzBuzz[1];
+
+           }
 
             /* for (int count = 0; count < usrCount+1; count++)                                                  //count to 100; print Fizz for multiples of 3, Buzz for multples of 5
                {
@@ -234,11 +245,16 @@ namespace FizzBuzz
 
                }*/
 
+            Console.WriteLine("\n\n\tOPTIONS | FIZZ = {0} | BUZZ = {1} | COLORS = {2} | LOOP = {3} | EVEN-ODD = {4} //", fizz, buzz, colorOn, loopUI, OddEvens);
+
             for (int count = 0; count <= usrCount; count++)                                                  //count to 100; print Fizz for multiples of 3, Buzz for multples of 5
             {
                 if (OddEvens)
                 {
-                    Console.Write(OddEven(count, true, colorOn) + "\n");
+                    Console.Write( OddEven(count, true, colorOn) );
+                    if (count % 10 == 0 && count > 0) Console.Write($"  ({count})");
+                    Console.Write("\n");
+
                     Thread.Sleep(550);
                     Console.ResetColor();
                     continue;
