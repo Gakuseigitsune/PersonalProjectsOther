@@ -16,7 +16,7 @@ namespace FizzBuzz
         //1.50 recoded most of original methods, added colors and beeps; moved functionality out of main; implemented tests
         //1.50L added even odd functionality for practice lab, added as basic boolean toggle option 
         //1.57L added color toggle, added Header UI method
-        //1.58L changed prime color to cyan, slightly tweaked Prime check logic (explicity checks for 0 and 1)
+        //1.58L changed prime color to cyan, slightly tweaked Prime check logic (explicity checks for 0 and 1); changed fizzbuzz to use string.split instead of substring
 
         public static string CurrVersion = "1.58L";
 
@@ -220,8 +220,8 @@ namespace FizzBuzz
                  fizz = userInp.Substring(0,middle);
                  buzz = userInp.Substring(middle);
              }*/
-           else                                                                                              //..otherwise set Fizz and Buzz as substrings
-           {                                                                                                 // split based on lenght of user input
+           else                                                                                              //set Fizz and Buzz as substrings
+           {                                                                                                 //split user input based on ' ' as delimiter
 
                 string[] fizzBuzz = userInp.Split(' ');
                 fizz = fizzBuzz[0];
