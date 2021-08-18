@@ -14,8 +14,9 @@ namespace FizzBuzz
         //1.61L moved bool flags into classes as statics, UI class added, moved prime method into Number class, combined Fizz and Buzz methods into a single method
         //1.70L all methods migrated into classes, DEFAULT class added, all tests updated to work with new methods
         //1.75L tweaks to UI padding logic, corrected bugs in FizzBuzz/ShowCOunt
+        //1.77L tweaks to FizzBuzz 3 is treated as Fizz and not as a prime; added visual toggle for Prime numbers when colors are off and not in OddEven mode 
         //1.9 planned > add ability for user to change flags
-        public static string CurrVersion = "1.75L";
+        public static string CurrVersion = "1.77L";
 
     }
 
@@ -181,6 +182,9 @@ namespace FizzBuzz
 
 
             if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Cyan;
+            else if (!UI.COLOR_ON && !UI.ODD_EVENS) Console.Write("(P) ");
+
+
             if (UI.BEEP_ON)
             {
                 Console.Beep(1000, 10);
@@ -220,67 +224,61 @@ namespace FizzBuzz
 
         public static void FizzBuzz(string fizz, string buzz, int count)
         {
-            if (!Number.IsPrime(count))
+
+            if (count % 3 == 0 && count % 5 == 0 && count != 0)                              //FizzBuzz
             {
-                if (count % 3 == 0 && count % 5 == 0 && count != 0)                   //FizzBuzz
-                {
-                    if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Green;                   
-                    Console.Write($"{fizz}");
-                    if (UI.BEEP_ON) Console.Beep(3000, 300);
+                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{fizz}");
+                
+                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write($"{buzz}\n");
 
-                    if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkMagenta;                  
-                    Console.Write($"{buzz}\n");
-                    if (UI.BEEP_ON) Console.Beep(900, 300);
-                    Console.ResetColor();
-                    return;
-
-                }
-                else if (count % 3 == 0 && count != 0)                              //Fizz
+                if (UI.BEEP_ON)
                 {
-                    if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($"{fizz}\n");
-                    if (UI.BEEP_ON) Console.Beep(3000, 300);
-                    Console.ResetColor();
-                    return;
-
-                }
-                else if (count % 5 == 0 && count != 0)                            //Buzz
-                {
-                    if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkMagenta;                 
-                    Console.Write($"{buzz}\n");
-                    if (UI.BEEP_ON) Console.Beep(900, 300);
-                    Console.ResetColor();
-                    return;
+                    Console.Beep(3000, 300);
+                    Console.Beep(900, 300);
                 }
 
-               
-                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Gray;       //Neither 
-                Console.Write($"{BinConv(count)}");
-                if (UI.BEEP_ON) Console.Beep(500, 50);
-                if (UI.SHOW_DECI)
-                {
-                    if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write($" ({count})");
-                }
-
-                Console.Write("\n");
                 Console.ResetColor();
+                return;
 
+            }
+            else if (count % 3 == 0 && count != 0)                                           //Fizz
+            {
+                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{fizz}\n");
+                if (UI.BEEP_ON) Console.Beep(3000, 300);
+                Console.ResetColor();
+                return;
+
+            }
+            else if (count % 5 == 0 && count != 0)                                           //Buzz
+            {
+                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write($"{buzz}\n");
+                if (UI.BEEP_ON) Console.Beep(900, 300);
+                Console.ResetColor();
                 return;
             }
 
-            Console.Write($"{BinConv(count)}");                                    //Prime
-
+            if (!Number.IsPrime(count))                                                     //Neither
+            {
+                if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.White;
+                if (UI.BEEP_ON) Console.Beep(500, 50);
+            }
+                                                                                       
+            Console.Write($"{BinConv(count)}");
 
             if (UI.SHOW_DECI)
             {
                 if (UI.COLOR_ON) Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($" ({count})");
-
             }
 
             Console.Write("\n");
             Console.ResetColor();
+
+            return;
         }
 
         public static void ShowCount(int count)  //not actually used as fuctionality is built into FizzBuzz
