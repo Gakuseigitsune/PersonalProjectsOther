@@ -193,7 +193,7 @@ namespace FizzBuzz
             bool showDecimal = true;                                                                       //show decimal alongside binary
             bool loopUI = true;                                                                            //toggle for looping app
             bool OddEvens = false;                                                                          //toggle for EVEN ODD (overrides output)
-            bool colorOn = true;                                                                          //Color coding on output
+            bool colorOn = false;                                                                          //Color coding on output
 
 
 
