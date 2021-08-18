@@ -17,14 +17,36 @@ namespace FizzBuzz_Tester
 
         public void PrimeCatcherTest(int number, bool correct)
         {
-            bool actual = Program.IsPrime(number, false);
+            bool actual = Number.IsPrime(number);
             Assert.Equal(actual, correct);
 
         }
+
+
         [Fact]
         public void BeepTest()
         {
 
+            Number.ShowCount(16);
+            Thread.Sleep(1000);
+
+            Number.FizzBuzz("f", "b", 6);
+            Thread.Sleep(1000);
+            Number.FizzBuzz("f", "b", 10);
+            Thread.Sleep(1000);
+            Number.FizzBuzz("f", "b", 15);
+            Thread.Sleep(1000);
+
+            Number.IsPrime(3);
+            Thread.Sleep(1000);
+
+            Number.OddEven(0);
+            Thread.Sleep(1000);
+            Number.OddEven(1);
+
+
+
+            /* older methods
             Program.Fizz("", 15, false);
             Thread.Sleep(1000);
 
@@ -36,7 +58,7 @@ namespace FizzBuzz_Tester
 
             Program.OddEven(4, true, false);
             Thread.Sleep(1000);
-            Program.OddEven(9, true, false);
+            Program.OddEven(9, true, false);*/
 
         }
 
@@ -50,7 +72,7 @@ namespace FizzBuzz_Tester
         [InlineData(8993, "ODD")]
         public void TestOddEven(int tester, string correct)
         {
-            string result = Program.OddEven(tester, false, false);
+            string result = Number.OddEven(tester);
             Assert.Equal(result, correct);
 
         }
@@ -63,9 +85,24 @@ namespace FizzBuzz_Tester
         [InlineData(1000, "1111101000")]
         public void TestBinConv(int tester, string correct)
         {
-            string result = Program.BinConv(tester);
+            string result = Number.BinConv(tester);
             Assert.Equal(correct, result);
 
+        }
+        [Fact]
+        public void UI_OPT_TEST()
+        {
+            string OPT = $"\n\nOPTIONS | FIZZ = f | BUZZ = b | COLORS = {UI.COLOR_ON} | BEEPS ON = {UI.BEEP_ON} | LOOP = {UI.LOOP_UI} | EVEN_ODD = {UI.ODD_EVENS} | DECIMAL = {UI.SHOW_DECI} //";
+            Assert.Equal(OPT, UI.SHOW_OPTIONS("f", "b"));
+        }
+
+        [Theory]     
+        [InlineData("************************************************* SuperFizzBuzz ver 1.xxx *************************************************\n", 125)]
+        [InlineData("**************************************** SuperFizzBuzz ver 1.xxx ****************************************\n", 106)]
+        public void UI_TEST(string correct, int window_w) 
+        {
+            UI.WINDOW_WIDTH = window_w;
+            Assert.True(correct.Length == UI.SHOW_HEADER().Length);
         }
 
 
