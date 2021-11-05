@@ -1,0 +1,16 @@
+
+<div style="text-align:center;">
+  <h3>Add new character</h3>
+  <table class="page_cent">
+    <tr><td><input type="text" [(ngModel)]="newChara.name" placeholder="Name"        /> </td></tr>
+
+    <tr><td><input type="text" [(ngModel)]="newChara.species" placeholder="Species"  /> </td></tr>
+     
+    <tr><td><input type="text" [(ngModel)]="newChara.char_class" placeholder="class" /> </td></tr>
+
+    <tr><td colspan="3"> <button (click)="addChar()" (mouseover)="checkNull()">Add</button>                       </td></tr>
+  </table>
+
+</div>
+
+<div *ngIf="hasError && errors" style="text-align:center; color: red; font-weight:bold;">{{errors[0]}}</div>

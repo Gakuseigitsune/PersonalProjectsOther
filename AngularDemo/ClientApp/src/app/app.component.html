@@ -1,0 +1,48 @@
+<body>
+  <h1>Character List</h1>
+
+
+  <ng-container *ngFor="let char of allChars">
+
+    <!--
+
+  <div class="{{char.char_class}}" style="margin:10px;">{{char.name}} - ({{char.char_class}})</div> -->
+
+    <app-character-detail [chara_Selected]="char"></app-character-detail>
+
+
+  </ng-container><br /><br />
+
+  <!--
+  <div>
+
+    Name: <input type="text" [(ngModel)] ="newName" />
+    Species: <input type="text" [(ngModel)]="newSpecies" /><br />
+
+    <button (click) ="addChar()">Add</button>
+
+  </div> -->
+
+  <app-chara-adder (newCharaAdded) ="getChars()" (error)="showError($event)"></app-chara-adder>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
