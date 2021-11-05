@@ -15,7 +15,7 @@ namespace FizzBuzz
         //1.70L all methods migrated into classes, DEFAULT class added, all tests updated to work with new methods
         //1.75L tweaks to UI padding logic, corrected bugs in FizzBuzz/ShowCOunt
         //1.77L tweaks to FizzBuzz 3 is treated as Fizz and not as a prime; added visual toggle for Prime numbers when colors are off and not in OddEven mode 
-        //1.9 planned > add ability for user to change flags
+        //1.9 Added Properties for BEEP_ON and COLOR_ON flags; implemented setter met
         public static string CurrVersion = "1.77L";
 
     }
@@ -37,6 +37,18 @@ namespace FizzBuzz
         public static bool SHOW_DECI = true;
         public static bool ODD_EVENS = true;
         public static bool LOOP_UI = true;
+
+        public static bool Colors
+        {
+            get { return COLOR_ON; }
+            set { COLOR_ON = value; }
+        }
+
+        public static bool Beeps
+        {
+            get { return BEEP_ON; }
+            set { BEEP_ON = value; }
+        }
 
 
         public static string TITLE = "SuperFizzBuzz";
@@ -114,6 +126,15 @@ namespace FizzBuzz
             Console.Write("\n");
 
         }
+
+        public static void SET_FLAGS()
+        {
+
+
+
+        }
+
+
 
     }
 
